@@ -1,5 +1,5 @@
 {
-    "users": [
-        {"username": "chris95", "password": "poopies"}
+    "users": [{
+        "username": "chris95", "password": "poopies", "profilepic": "https://pbs.twimg.com/profile_images/3276595998/6de702a3fb482b173f56fe6ac400594c.png"}
     ]
 }
