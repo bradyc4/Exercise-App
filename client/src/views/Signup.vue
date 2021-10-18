@@ -1,39 +1,54 @@
 <template>
-<div>
+<div class="column is-half is-offset-one-quarter">
+
+<div class="field">
+  <label class="label">First Name</label>
+  <div class="control has-icons-left has-icons-right">
+    <input class="input" type="text" required v-model="user.firstName">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Last Name</label>
+  <div class="control has-icons-left has-icons-right">
+    <input class="input" type="text" required v-model="user.lastName">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Email</label>
+  <div class="control has-icons-left has-icons-right">
+    <input class="input" type="text" required v-model="email">
+  </div>
+</div>
 
 <div class="field">
   <label class="label">Username</label>
   <div class="control has-icons-left has-icons-right">
-    <input class="input" type="text" required v-model="user.usernameinput">
-    <span class="icon is-small is-left">
-      <i class="fas fa-user"></i>
-    </span>
-    <span class="icon is-small is-right">
-      <i class="fas fa-check"></i>
-    </span>
+    <input class="input" type="text" required v-model="user.handle">
   </div>
 </div>
 
 <div class="field">
     <label class="label">Password</label>
   <p class="control has-icons-left">
-    <input class="input" type="password" required v-model="user.passwordinput">
-    <span class="icon is-small is-left">
-      <i class="fas fa-lock"></i>
-    </span>
+    <input class="input" type="password" required v-model="user.password">
   </p>
 </div>
 
 <div class="field is-grouped">
   <div class="control">
-     <button class="button is-link" @click="submitForm(user.usernameinput, user.passwordinput)">Submit</button>
+     <button class="button is-light" @click="this.user.emails.push(email), Add(this.user), this.$router.push('/login');">
+     <strong>Submit</strong>
+     </button>
   </div>
 </div>
-<p>username: {{ user.usernameinput }} password: {{ user.passwordinput }} array: {{ array }}</p>
+<p>username: {{ user.handle }} password: {{ user.password }} array: {{ array }}</p>
   </div>
 </template>
 
 <script>
+import { Add } from '../services/users';
 export default {
     name: 'Signup',
     components: {
@@ -41,26 +56,32 @@ export default {
     data() {
         return {
             //usernameinput: '',
-            //passwordinput: '',
-            user: {
-                usernameinput: '',
-                passwordinput: '',
+            email: '',
+            Add,
+            user: { 
+              firstName: '',
+              lastName: '',
+              handle: '',
+              pic: '',
+              password: '',
+              isAdmin: false,
+              emails: [
+              ],
+              following: [ { handle: '@vp', isApproved: true }, { handle: '@johnsmith', isApproved: true }, ],
+              get name(){ return this.firstName + ' ' + this.lastName },
             },
             array: [],
         }
     },
-    mounted() {
+    /*mounted() {
         fetch('http://localhost:3000/users')
             .then(res => res.json())
             .then(data => this.array = data)
             .catch(err => console.log(err.message))
-    },
+    },*/
     methods: {
-        submitForm(x, y) {
-            this.array.push({
-                "username" : x,
-                "password" : y,
-            });
+        submitForm() {
+          //Add(this.user)
         }
     }
 }

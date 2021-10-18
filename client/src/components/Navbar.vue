@@ -1,9 +1,9 @@
 <template>
   <div>
-      <nav class="navbar" role="navigation" aria-label="main navigation">
+      <nav class="navbar is-info" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="https://bulma.io">
-      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+      <img src="https://www.clipartmax.com/png/small/190-1907892_clipart-of-the-man-running-icon-running-man-icon-png.png" alt="Clipart Of The Man Running Icon - Running Man Icon Png @clipartmax.com">
     </a>
 
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -15,33 +15,26 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="home">
+      <a class="navbar-item" @click="home">
         Home
       </a>
       
-      <a class="navbar-item">
+      <a class="navbar-item" @click="feed">
         Feed
       </a>
 
-      <a class="navbar-item">
+      <a class="navbar-item" @click="friends">
             Friends
       </a>
 
-      <a class="navbar-item" href="about">
+      <a class="navbar-item" @click="about">
             About
       </a>
     </div>
 
     <div class="navbar-end">
       <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-primary" href="signup">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light" href="login">
-            Log in
-          </a>
-        </div>
+        <login-badge />
       </div>
     </div>
   </div>
@@ -50,8 +43,41 @@
 </template>
 
 <script>
+import session from "../services/session";
+import LoginBadge from './LoginBadge';
 export default {
-
+  data(){
+    return {
+      isActive: false
+    }
+  },
+  components: {
+    LoginBadge,
+  },
+  methods: {
+    home(){
+      this.$router.push('/');
+    },
+    feed(){
+      if(session.user === null){
+        this.$router.push('/login');
+      }
+      else{
+        this.$router.push('/feed');
+      }
+    },
+    friends(){
+      if(session.user === null){
+        this.$router.push('/login');
+      }
+      else{
+        this.$router.push('/friends');
+      }
+    },
+    about(){
+      this.$router.push('/about');
+    }
+  }
 }
 </script>
 

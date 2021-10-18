@@ -3,7 +3,7 @@ import { Login } from "./users";
 const session = {
     user: null,
     messages: [],
-    Login(email, password){
+    Login(handle, password){
         const user = Login(handle, password)
         this.user = user.user
     }

@@ -3,6 +3,19 @@
 
 const list = [
     { 
+        firstName: 'P',
+        lastName: 'Z',
+        handle: 'p',
+        pic: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMo3I5GL9_Zd_LULXRIXTzRLlVESBnoGp8sw&usqp=CAU',
+        password: 'me',
+        isAdmin: true,
+        emails: [
+            "weeb@newpaltz.edu"
+        ],
+        following: [ { handle: '@vp', isApproved: true }, { handle: '@johnsmith', isApproved: true }, ],
+        get name(){ return this.firstName + ' ' + this.lastName },
+    },
+    { 
         firstName: 'Moshe',
         lastName: 'Plotkin',
         handle: '@JewPaltz',
@@ -90,4 +103,13 @@ export function Login(handle, password){
     const data = { ...user, password: undefined };
 
     return { user: data };
+}
+export function SearchForUser(string){
+    const temp = [];
+    for(let i=0; i<list.length; i++){
+        if(list[i].handle.toLowerCase().includes(string.toLowerCase())){
+            temp.push(list[i].handle);
+        }
+    }
+    return temp;
 }
