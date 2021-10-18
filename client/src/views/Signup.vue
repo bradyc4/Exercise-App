@@ -51,7 +51,6 @@
      </button>
   </div>
 </div>
-<p>username: {{ user.handle }} password: {{ user.password }} array: {{ array }}</p>
   </div>
 </template>
 
