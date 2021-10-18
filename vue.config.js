@@ -3,6 +3,8 @@
 /**
  * @type {import('@vue/cli-service').ProjectOptions}
  */
-module.exports = {
+ module.exports = {
+    //options...
+    outputDir: "/docs/",
     publicPath: "/docs/"
 }
