@@ -1,6 +1,12 @@
 <template>
 <div class="column is-half is-offset-one-quarter">
 
+<div class="notification is-danger" v-bind:class="{ 'is-hidden': errorBool }">
+  <button class="delete" @click="hideError"></button>
+  {{errormessage}}
+</div>
+
+<h1 style="text-align: center; font-size: 35px;">Log In</h1>
 <div class="field">
   <label class="label">Username</label>
   <div class="control has-icons-left has-icons-right">
@@ -17,7 +23,7 @@
 
 <div class="field is-grouped">
   <div class="control">
-    <button class="button is-success" @click="login(username, password)">Login</button>
+    <button class="button is-success" @click="login(username, password)"><strong>Login</strong></button>
   </div>
   <div class="control">
     <button class="button is-link is-light">Cancel</button>
@@ -38,6 +44,8 @@ export default {
       password: '',
       session,
       userarray: [],
+      errormessage: null,
+      errorBool: true,
     }),
     /*mounted() {
         fetch('http://localhost:3000/users')
@@ -47,8 +55,16 @@ export default {
     },*/
     methods: {
         login(){
+          try {
             this.session.Login(this.username, this.password);
             this.$router.push('/');
+          } catch (error) {
+            this.errormessage = error.msg;
+            this.errorBool = false;
+          }
+        },
+        hideError(){
+          this.errorBool=true;
         }
     }
 }

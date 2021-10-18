@@ -59,8 +59,8 @@ export function GetAll() { return list; }
 export function Get(user_id) { return list[user_id]; }
 export function GetByHandle(handle) { return ({ ...list.find( x => x.handle == handle ), password: undefined }); } 
 export function Add(user) {
-    if(!user.firstName){
-        throw { code: 422, msg: "First Name is required" }
+    if(!user.firstName || !user.lastName || !user.handle || !user.password || user.emails.length === 0){
+        throw { code: 422, msg: "Please enter valid information in all fields" }
     }
      list.push(user);
      return { ...user, password: undefined };

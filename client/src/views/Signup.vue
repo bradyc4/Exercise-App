@@ -1,6 +1,14 @@
 <template>
+
 <div class="column is-half is-offset-one-quarter">
 
+
+<div class="notification is-danger" v-bind:class="{ 'is-hidden': errorBool }">
+  <button class="delete" @click="hideError"></button>
+  {{errormessage}}
+</div>
+
+<h1 style="text-align: center; font-size: 35px;">Sign Up</h1>
 <div class="field">
   <label class="label">First Name</label>
   <div class="control has-icons-left has-icons-right">
@@ -38,7 +46,7 @@
 
 <div class="field is-grouped">
   <div class="control">
-     <button class="button is-light" @click="this.user.emails.push(email), Add(this.user), this.$router.push('/login');">
+     <button class="button is-success" @click="signUp()">
      <strong>Submit</strong>
      </button>
   </div>
@@ -56,8 +64,10 @@ export default {
     data() {
         return {
             //usernameinput: '',
-            email: '',
+            email: null,
+            errorBool: true, 
             Add,
+            errormessage: null,
             user: { 
               firstName: '',
               lastName: '',
@@ -80,13 +90,28 @@ export default {
             .catch(err => console.log(err.message))
     },*/
     methods: {
-        submitForm() {
-          //Add(this.user)
+        signUp() {
+          try {
+            if(this.email != null){
+              this.user.emails.push(this.email);
+              console.log("wwwww");
+            }
+            Add(this.user);
+            this.$router.push('/login');
+          } catch (error) {
+            this.errorBool=false;
+            this.errormessage = error.msg;
+          }
+        },
+        hideError(){
+          this.errorBool=true;
         }
     }
 }
 </script>
 
 <style>
-
+.label{
+  color: white;
+}
 </style>

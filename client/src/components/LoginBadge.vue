@@ -8,7 +8,7 @@
           </a>
     </div>
     <div v-else>
-        Hello {{name}} 
+        {{name}}
         <a class="button is-light" @click="logout">
             Log Out
         </a>
