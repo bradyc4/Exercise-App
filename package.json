@@ -1,8 +1,25 @@
 {
+  "name": "exercise-app",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch server server/index",
+    "start": "node server/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradyc4/exercise-app.git"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "bulma": "^0.9.3",
-    "express": "^4.17.1",
     "json-server": "^0.17.0",
-    "nodemon": "^2.0.13"
+    "bulma": "^0.9.3",
+    "express": "4.17.1",
+    "dotenv": "^10.0.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
   }
 }

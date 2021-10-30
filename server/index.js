@@ -1,14 +1,22 @@
-const express = require('express')
+const express = require('express');
+const path = require('path');
+require('dotenv').config();
+
+console.log(`Test = ${process.env.TEST_STRING}`);
+
+const usersController = require('./controllers/users');
+const postsController = require('./controllers/posts');
+
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000;
 
 app
-.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-.get('/newpaltz', (req, res) => {
-    res.send('Hello New Paltz!')    
-})
+    .use('/', express.static(path.join(__dirname, '../docs')) )
+    .use('/users', usersController )
+    .use('/posts', postsController)
+
+app
+    .get('*', (req, res) => res.sendFile(path.join(__dirname, '../docs/index.html')) )
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
