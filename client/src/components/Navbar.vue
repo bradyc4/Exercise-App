@@ -16,21 +16,21 @@
 
   <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': activator }">
     <div class="navbar-start">
-      <a class="navbar-item" @click="home" active-class="is-active" exact>
+      <router-link class="navbar-item" to="/" active-class="is-active" exact>
         Home
-      </a>
+      </router-link>
       
-      <a class="navbar-item" @click="feed" active-class="is-active">
+      <router-link class="navbar-item" to="/feed" active-class="is-active">
         Feed
-      </a>
+      </router-link>
 
-      <a class="navbar-item" @click="friends" active-class="is-active">
+      <router-link class="navbar-item" to="/friends" active-class="is-active">
             Friends
-      </a>
+      </router-link>
 
-      <a class="navbar-item" @click="about" active-class="is-active">
+      <router-link class="navbar-item" to="/about" active-class="is-active">
             About
-      </a>
+      </router-link>
     </div>
 
     <div class="navbar-end">
