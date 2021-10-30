@@ -10,7 +10,7 @@
     <div v-else>
         {{name}}
         <a class="button is-light" @click="logout">
-            Log Out
+             Log Out
         </a>
     </div>
 </template>
