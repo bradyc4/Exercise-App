@@ -16,38 +16,40 @@
                         <input class="input" type="text" v-model="username">
                     </div>
             
-                    <a class="button is-primary" @click="search(username)">
+                    <a class="button is-primary" @click="search()">
                     <strong>search</strong>
                 </a>
                 
             </div>
 
-        <div v-for="p in userlist" :key="p" style="padding:3px">
+        <div v-for="p in userlist" :key="p._id" style="padding:3px">
             <a class="button is-primary">
-                <strong>{{p}}</strong>
+                <strong>{{p.handle}}</strong>
             </a>
         </div>
     </div>
     <div class="column is-two-thirds">
+        
     </div>
     </div>
 </div>
 </template>
 
 <script>
-import { SearchForUser } from '../services/users'
+import { GetAll } from '../services/users'
 let userlist = [];
 export default {
     data() {
         return{
-            SearchForUser,
+            GetAll,
             username: null,
             userlist
         }
     },
     methods: {
-        search(string){
-            this.userlist = SearchForUser(string);
+        search(){
+            this.userlist = GetAll();
+            console.log("I hate this class with a burning passion, why didnt I take cybersecurity");
         }
     }
 }

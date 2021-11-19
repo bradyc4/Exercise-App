@@ -26,6 +26,11 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue')
+  },
+  {
     path: '/feed',
     component: Feed,
     meta: { requiresLogin: true }

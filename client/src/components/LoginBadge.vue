@@ -12,6 +12,9 @@
         <a class="button is-light" @click="logout">
              Log Out
         </a>
+        <router-link class="button is-light" to="/profile">
+             Profile
+        </router-link>
     </div>
 </template>
 
