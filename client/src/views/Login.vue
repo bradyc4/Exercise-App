@@ -10,7 +10,7 @@
 <div class="field">
   <label class="label">Username</label>
   <div class="control has-icons-left has-icons-right">
-    <input class="input" type="text" v-model="username">
+    <input class="input" type="text" v-model="handle">
   </div>
 </div>
 
@@ -23,7 +23,7 @@
 
 <div class="field is-grouped">
   <div class="control">
-    <button class="button is-success" @click="login(username, password)"><strong>Login</strong></button>
+    <button class="button is-success" @click="login(handle, password)"><strong>Login</strong></button>
   </div>
   <div class="control">
     <button class="button is-link is-light">Cancel</button>
@@ -34,15 +34,15 @@
 </template>
 
 <script>
-import session from "../services/session";
+import Session from "../servicesold/session";
 export default {
     name: 'Login',
     components: {
     },
     data: ()=> ({
-      username: '',
+      handle: '',
       password: '',
-      session,
+      Session,
       userarray: [],
       errormessage: null,
       errorBool: true,
@@ -56,7 +56,7 @@ export default {
     methods: {
         login(){
           try {
-            this.session.Login(this.username, this.password);
+            this.Session.Login(this.handle, this.password);
             this.$router.push('/');
           } catch (error) {
             this.errormessage = error.msg;

@@ -12,8 +12,8 @@
 
 <script>
 import Post from "../components/Post";
-import session from "../services/session";
-import { GetWall } from "../services/posts";
+import session from "../servicesold/session";
+import { GetWall } from "../servicesold/posts";
 export default {
     components: {
         Post

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Session from '../services/session';
+import Session from '../servicesold/session';
 import Home from '../views/Home.vue';
 import Feed from '../views/Feed.vue';
 import Friends from '../views/Friends.vue';
@@ -29,6 +29,12 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: () => import('../views/Profile.vue')
+  },
+  {
+    path: '/schedule',
+    name: 'Schedule',
+    component: () => import('../views/Schedule.vue'),
+    meta: { requiresLogin: true }
   },
   {
     path: '/feed',

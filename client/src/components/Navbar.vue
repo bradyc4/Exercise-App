@@ -28,6 +28,10 @@
         Friends
       </router-link>
 
+      <router-link class="navbar-item" to="/schedule" active-class="is-active">
+        Schedule
+      </router-link>
+
       <router-link class="navbar-item" to="/about" active-class="is-active">
         About
       </router-link>

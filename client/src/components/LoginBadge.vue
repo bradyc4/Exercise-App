@@ -15,11 +15,13 @@
         <router-link class="button is-light" to="/profile">
              Profile
         </router-link>
+        <a class="button" @click="test">test</a>
     </div>
+    
 </template>
 
 <script>
-import Session from "../services/session";
+import Session from "../servicesold/session";
 
 export default {
     data (){
@@ -38,6 +40,10 @@ export default {
         },
         logout(){
             this.Session.user = null;
+            this.$router.push('/');
+        },
+        test(){
+            console.log(Session.user.firstName);
         }
     },
     computed:{

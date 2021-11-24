@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { Add } from '../services/users';
+import { Add } from '../servicesold/users';
 export default {
     name: 'Signup',
     components: {
@@ -73,10 +73,11 @@ export default {
               handle: '',
               pic: '',
               password: '',
+              bio: '',
               isAdmin: false,
-              emails: [
-              ],
-              following: [ { handle: '@vp', isApproved: true }, { handle: '@johnsmith', isApproved: true }, ],
+              emails: [],
+              following: [],
+              schedule: [],
               get name(){ return this.firstName + ' ' + this.lastName },
             },
             array: [],
