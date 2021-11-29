@@ -62,7 +62,7 @@
             <input class="input" type="text" placeholder="Time" @click="isActive2=false; isActive3=false" required v-model="to">
             Notes
             <textarea class="textarea" placeholder="Notes" @click="isActive2=false; isActive3=false" required v-model="notes"></textarea>  
-            <button @click="Submit()">Submit</button>
+            <button @click="Submit(); isActive = false">Submit</button>
             <button @click="isActive = false">Cancel</button>
             </div>
             
@@ -160,6 +160,7 @@ export default {
       if(this.day && this.from && this.to){
         this.p_user.schedule.push({type: this.index, exercise: this.index2, day: this.day, from: this.from, to: this.to, notes: this.notes});
         Update(session.user._id, this.p_user);
+        this.isActive=false;
       } else {
         console.log("error");
       }

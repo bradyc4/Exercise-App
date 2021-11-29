@@ -19,9 +19,13 @@
     <label class="label">Profile Pic</label>
       <input class="input" type="text" v-model="user.pic" v-bind:class="{ 'is-hidden': !editBool }">
       <div v-bind:class="{ 'is-hidden': editBool }">{{user.pic}}</div>
+      <img :src="user.pic" alt="Placeholder image" style="width:25%; height:25%; align:center;">
 
-    <div class="button" @click="edit" v-bind:class="{ 'is-hidden': editBool }">edit</div>
+    <div>
+      <div class="button" @click="edit" v-bind:class="{ 'is-hidden': editBool }">edit</div>
     <div class="button" @click="updateUser" v-bind:class="{ 'is-hidden': !editBool }">Submit</div>
+    </div>
+    
   </div>
 </template>
 
