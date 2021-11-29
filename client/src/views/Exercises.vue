@@ -78,10 +78,10 @@
       <div class="column is-one-third is-offset-one-third">
         <div class="tabs">
           <ul>
-            <li @click="index=0"><a>Endurance</a></li>
-            <li @click="index=1"><a>Strength</a></li>
-            <li @click="index=2"><a>Balance</a></li>
-            <li @click="index=3"><a>Flexibility</a></li>
+            <li @click="index=0"><button class="button is-info">Endurance</button></li>
+            <li @click="index=1"><button class="button is-info">Strength</button></li>
+            <li @click="index=2"><button class="button is-info">Balance</button></li>
+            <li @click="index=3"><button class="button is-info">Flexibility</button></li>
           </ul>
         </div>                
         <div v-for="(p, i) in list[index]" :key="p.label">

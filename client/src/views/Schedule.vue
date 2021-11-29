@@ -1,8 +1,8 @@
 <template>
 <div>
   <div class="columns">
-    <div class="column is-one-third is-offset-one-third" v-for="p in schedule" :key="p">
-      <div class="card" style="padding:10px">
+    <div class="column is-one-third is-offset-one-third">
+      <div class="card" style="padding:10px" v-for="p in schedule" :key="p">
         <p>Type: {{ar_type[p.type]}}</p>
         <p>exercise: {{list[p.type][p.exercise].label}}</p>
         <p>From: {{p.from}}</p>
@@ -31,5 +31,8 @@ export default {
 </script>
 
 <style>
-
+.card{
+  background-color:#315283;
+  color:white;
+}
 </style>

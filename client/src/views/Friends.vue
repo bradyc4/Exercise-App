@@ -5,9 +5,9 @@
         
       <div class="tabs">
           <ul>
-          <li @click="index=0"><a>Search</a></li>
-          <li @click="index=1"><a>Following</a></li>
-          <li @click="index=2"><a>Followers</a></li>
+          <li @click="index=0"><button class="button is-info">Search</button></li>
+          <li @click="index=1"><button class="button is-info">Following</button></li>
+          <li @click="index=2"><button class="button is-info">Followers</button></li>
           </ul>
       </div>
       <div v-if="index===0">
@@ -38,7 +38,7 @@
 
       <div v-if="index===1">
         <div v-for="p in ourfollowers" :key="p.handle" style="padding:3px">
-            <a class="button is-primary" v-if="this.ourid!=p._id" @click="selectFollower(p)">
+            <a class="button is-primary" @click="selectFollower(p)">
               <strong>{{p.handle}}</strong>
             </a>
           </div>
@@ -122,12 +122,14 @@ export default {
             }  
         },
         async selectFollower(p){
-          this.p_user= await GetByHandle(p.handle).then(x => {
+          GetByHandle(p.handle).then(x => {
+            this.p_user = x;
             this.pid=x._id;
             this.followBool=true;
             this.user.handle = x.handle;
             this.fullname = x.firstName+" "+x.lastName;
             this.bio = x.bio;
+            this.p_pic = x.pic;
           })
 
         },

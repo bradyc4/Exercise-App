@@ -16,10 +16,12 @@
       <input class="input" type="text" v-model="user.bio" v-bind:class="{ 'is-hidden': !editBool }">
       <div v-bind:class="{ 'is-hidden': editBool }">{{user.bio}}</div>
 
+    <label class="label">Profile Pic</label>
+      <input class="input" type="text" v-model="user.pic" v-bind:class="{ 'is-hidden': !editBool }">
+      <div v-bind:class="{ 'is-hidden': editBool }">{{user.pic}}</div>
+
     <div class="button" @click="edit" v-bind:class="{ 'is-hidden': editBool }">edit</div>
     <div class="button" @click="updateUser" v-bind:class="{ 'is-hidden': !editBool }">Submit</div>
-
-    {{Session.user.isAdmin}}
   </div>
 </template>
 
