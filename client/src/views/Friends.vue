@@ -1,80 +1,95 @@
 <template>
 <div>
-    <div class="columns">
+  <div class="columns">
     <div class="column is-one-third">
         
-            <div class="tabs">
-                <ul>
-                <li class="is-active"><a>Friends</a></li>
-                <li><a>Search</a></li>
-                </ul>
-            </div>
-            
-            <div class="field">
-                    <label class="label">Search For Users</label>
-                    <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" v-model="username">
-                    </div>
-            
-                    <a class="button is-primary" @click="search(username)">
-                    <strong>search</strong>
-                </a>
-                
-            </div>
-
-        <div v-for="p in userlist" :key="p._id" style="padding:3px">
-            <a class="button is-primary" @click="selectUser(p)">
-                <strong>{{p.handle}}</strong>
-            </a>
-        </div>
-    </div>
-    {{ourfollowers}}
-    <div class="column is-two-thirds">
-        <div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-        </figure>
+      <div class="tabs">
+          <ul>
+          <li @click="index=0"><a>Search</a></li>
+          <li @click="index=1"><a>Following</a></li>
+          <li @click="index=2"><a>Followers</a></li>
+          </ul>
       </div>
-      <div class="media-content">
-        <p class="title is-4">{{fullname}}</p>
-        <p class="subtitle is-6">{{user.handle}}</p>
-      </div>
-    </div>
-
-    <div class="content">
-      {{bio}}
-    </div>
-    <button v-if="followBool===false" @click="followUser(this.user)">Follow</button>
-    <button v-else @click="unfollowUser(this.user)">Unfollow</button>
+      <div v-if="index===0">
         
+        <nav class="level">
+          
+          <div class="level-item">
+            <div class="field has-addons" >
+              <p class="control">
+                  <input class="input" type="text" v-model="username">
+              </p>
+              <p class="control">
+                <button class="button is-primary" @click="searchforuser(username)">
+                  <strong>search</strong>
+                </button>
+              </p>
+            </div>
+          </div>
+        </nav>
+          
+        
+          <div v-for="p in userlist" :key="p._id" style="padding:3px">
+            <a class="button is-primary" v-if="this.ourid!=p._id" @click="selectUser(p)">
+              <strong>{{p.handle}}</strong>
+            </a>
+          </div>
+      </div>
+
+      <div v-if="index===1">
+        <div v-for="p in ourfollowers" :key="p.handle" style="padding:3px">
+            <a class="button is-primary" v-if="this.ourid!=p._id" @click="selectFollower(p)">
+              <strong>{{p.handle}}</strong>
+            </a>
+          </div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="column is-two-thirds" style="text-align: center;">
+      <div class="card">
+        <div class="card-image">
+            <img :src="p_pic" alt="Placeholder image" style="width:50%; height:50%; align:center;">
+        </div>
+        <div class="card-content" v-if="p_user">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">{{fullname}}</p>
+              <p class="subtitle is-6">{{user.handle}}</p>
+            </div>
+          </div>
+
+          <div class="content">
+            {{bio}}
+          </div>
+
+          <button v-if="followBool" @click="unfollowUser(this.p_user)">Unfollow</button>
+          <button v-else @click="followUser(this.p_user)">Follow</button>
+
+
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-    </div>
-    </div>
 </div>
 </template>
 
 <script>
-import Session from '../servicesold/session';
-import { GetSubList } from '../servicesold/users';
-import { addFollowee } from '../servicesold/users';
-import { deleteFollowee } from '../servicesold/users';
-import { checkFollowing } from '../servicesold/users';
+import Session from '../services/session';
+import { Follow, Get, GetByHandle, Search, UnFollow } from '../services/users';
+//import { deleteFollowee } from '../services/users';
+//import { checkFollowing } from '../services/users';
 let userlist = [];
 export default {
     data() {
         return{
-            GetSubList,
+            //GetSubList,
+            testuser: null,
+            p_user: null,
             pid: null,
-            ourid: Session.user.id,
+            ourid: Session.user._id,
             ourfollowers: Session.user.following,
             username: null,
             userlist,
@@ -82,41 +97,72 @@ export default {
             fullname: null,
             bio: null,
             followBool: false,
-            checkFollowing
+            p_pic: "https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/256x256/plain/user.png",
+            index:0,
+            GetByHandle,
+            //checkFollowing
         }
     },
     methods: {
-        search(string){
-            this.userlist = GetSubList(string);
-            console.log("I hate this class with a burning passion, why didnt I take cybersecurity");
+        async searchforuser(string){
+            this.userlist = await Search(string);
         },
         selectUser(p){
-            console.log("session user id = "+this.ourid);
-            console.log("selected user id = "+p.id);
-            this.pid=p.id;
+            this.p_user=p;
+            this.pid=p._id;
             this.followBool=false;
             this.user.handle = p.handle;
             this.fullname = p.firstName+" "+p.lastName;
             this.bio = p.bio;
+            this.p_pic = p.pic;
             for(let i=0; i<this.ourfollowers.length; i++){
                 if(this.ourfollowers[i].handle===p.handle){
                     this.followBool=true;
                 }
             }  
         },
-        followUser(followee){
-            let followee2 = { handle: followee.handle, isApproved: followee.isApproved };
-            addFollowee(this.ourid, followee2);
+        async selectFollower(p){
+          this.p_user= await GetByHandle(p.handle).then(x => {
+            this.pid=x._id;
             this.followBool=true;
+            this.user.handle = x.handle;
+            this.fullname = x.firstName+" "+x.lastName;
+            this.bio = x.bio;
+          })
+
         },
-        unfollowUser(followee){
-            deleteFollowee(this.ourid, followee);
-            this.followBool=false;
+        async followUser(followee){
+            Follow(Session.user.handle, followee.handle).then(async x => {
+                this.followBool=x.success;
+                this.testuser = await Get(this.ourid).then(x => {
+                    this.ourfollowers = x.following;
+                });
+            });
+            
+        },
+        async unfollowUser(followee){
+            UnFollow(Session.user.handle, followee.handle).then(async x => {
+                this.followBool=!x.success;
+                this.testuser = await Get(this.ourid).then(x => {
+                    this.ourfollowers = x.following;
+                });
+            });
         }
     }
 }
 </script>
 
 <style>
-
+.li{
+  color: white;
+}
+.a{
+  color: white;
+}
+.title{
+  color: white;
+}
+.subtitle{
+  color: white;
+}
 </style>

@@ -20,3 +20,19 @@ export function Delete(user_id) {
 export function Login(handle, password){
     return api('users/login', { handle, password });
 }
+
+export function Search(string){
+    return api('users/search/' + string);
+}
+
+export function Follow(follower, followee){
+    return api('users/' + follower + "/follow/" + followee, {}, 'POST');
+}
+
+export function UnFollow(follower, followee){
+    return api('users/' + follower + "/follow/" + followee, {}, 'DELETE');
+}
+
+export function Approve(follower, followee){
+    return api('users/' + follower + "/approve/" + followee, {}, 'PATCH');
+}

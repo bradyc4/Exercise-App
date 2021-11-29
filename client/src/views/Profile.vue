@@ -18,17 +18,18 @@
 
     <div class="button" @click="edit" v-bind:class="{ 'is-hidden': editBool }">edit</div>
     <div class="button" @click="updateUser" v-bind:class="{ 'is-hidden': !editBool }">Submit</div>
+
+    {{Session.user.isAdmin}}
   </div>
 </template>
 
 <script>
-import Session from "../servicesold/session";
-import { Update } from '../servicesold/users';
+import Session from "../services/session";
+import { Update } from '../services/users';
 export default {
     data (){
         return ({ 
             user: { 
-              id: Session.user.id,
               firstName: Session.user.firstName,
               lastName: Session.user.lastName,
               handle: Session.user.handle,
@@ -38,7 +39,6 @@ export default {
               isAdmin: Session.user.isAdmin,
               emails: Session.user.emails,
               following: Session.user.following,
-              get name(){ return this.firstName + ' ' + this.lastName },
             },
             Session,
             editBool: false,
@@ -49,7 +49,7 @@ export default {
           this.editBool=true;
         },
         updateUser(){
-          Update(Session.user.id, this.user);
+          Update(Session.user._id, this.user);
           this.editBool=false;
         },
     }

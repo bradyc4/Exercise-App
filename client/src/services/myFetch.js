@@ -7,6 +7,7 @@ export async function api(url, data = null, method = null){
         let response;
 
         if(data){
+            console.log(data);
             response = await fetch(API_ROOT + url, {
                 method: method ?? 'POST', // *GET, POST, PUT, DELETE, etc.
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

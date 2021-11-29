@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { Add } from '../servicesold/users';
+import { Add } from '../services/users';
 export default {
     name: 'Signup',
     components: {

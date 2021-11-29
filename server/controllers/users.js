@@ -1,5 +1,3 @@
-/*  B"H
-*/
 const express = require("express");
 const model = require("../models/users");
 const friends = require("../models/friends");
@@ -103,6 +101,11 @@ app
                 res.status(201).send("Created");
             })
             .catch(next) 
+    })
+    .get("/search/:string", (req, res, next) =>{
+        model   .Search(req.params.string)
+                .then( x=> res.send(x) )
+                .catch(next)    
     })
 
 module.exports = app;

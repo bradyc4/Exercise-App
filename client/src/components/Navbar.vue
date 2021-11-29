@@ -32,8 +32,16 @@
         Schedule
       </router-link>
 
+      <router-link class="navbar-item" to="/exercises" active-class="is-active">
+        Exercises
+      </router-link>
+
       <router-link class="navbar-item" to="/about" active-class="is-active">
         About
+      </router-link>
+
+      <router-link v-if="session.user && session.user.isAdmin" class="navbar-item" to="/admin" active-class="is-active">
+        Admin
       </router-link>
     </div>
 
@@ -54,7 +62,8 @@ export default {
   data(){
     return {
       isActive: false,
-      activator: false
+      activator: false,
+      session
     }
   },
   components: {
@@ -88,8 +97,11 @@ export default {
       return this.activator;
     }
   },
-  
-
+  computed: {
+    adminBool(){
+      return session.user.isAdmin;
+    }
+  }
 }
 </script>
 

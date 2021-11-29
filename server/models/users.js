@@ -129,6 +129,4 @@ module.exports.Seed = async ()=>{
     }
 }
 
-module.exports.SearchForUser = async function SearchForUser(string) {
-    return collection.find({$in: string}).toArray();
-}
+module.exports.Search = q => collection.find({ handle: new RegExp(q,"i") }).toArray();

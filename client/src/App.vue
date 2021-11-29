@@ -13,9 +13,13 @@
 <style lang="css">
 .router {
     background-color:#39619E;
-    height: 50em;
+    height: 60em;
     padding: 0.5em;
     color: white;
+}
+.card{
+  background-color:#315283;
+  padding: 10px;
 }
 </style>
 
