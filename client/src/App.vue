@@ -13,7 +13,7 @@
 <style lang="css">
 .router {
     background-color:#39619E;
-    height: 60em;
+    min-height: 55em;
     padding: 0.5em;
     color: white;
 }

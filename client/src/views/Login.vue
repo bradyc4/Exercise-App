@@ -54,14 +54,16 @@ export default {
             .catch(err => console.log(err.message))
     },*/
     methods: {
-        login(){
-          try {
-            this.Session.Login(this.handle, this.password);
-            this.$router.push('/');
-          } catch (error) {
-            this.errormessage = error.msg;
-            this.errorBool = false;
-          }
+        async login(){
+            this.Session.Login(this.handle, this.password).then(x => {
+              if(x){
+                this.errormessage = "Incorrect username or password";
+                this.errorBool = false;
+              } else {
+                this.$router.push('/');
+              }
+
+            });
         },
         hideError(){
           this.errorBool=true;

@@ -5,6 +5,12 @@
       <div class="modal-content">
         <div class="card" style="padding:10px">
 
+
+          <div class="notification" v-bind:class="{ 'is-hidden': hideBool, 'is-danger': dangerBool, 'is-success': !dangerBool }">
+            <button class="delete" @click="hideBool = true"></button>
+            {{notimessage}}
+          </div>
+
             Type
             <div class="dropdown" :class="{'is-active': isActive2 }">
               <div class="dropdown-trigger" @click="isActive2 = !isActive2; isActive3=false">
@@ -62,7 +68,7 @@
             <input class="input" type="text" placeholder="Time" @click="isActive2=false; isActive3=false" required v-model="to">
             Notes
             <textarea class="textarea" placeholder="Notes" @click="isActive2=false; isActive3=false" required v-model="notes"></textarea>  
-            <button @click="Submit(); isActive = false">Submit</button>
+            <button @click="Submit()">Submit</button>
             <button @click="isActive = false">Cancel</button>
             </div>
             
@@ -153,6 +159,9 @@ export default {
       ar_type,
       session,
       Update,
+      notimessage: null,
+      hideBool: true,
+      dangerBool: false,
     }
   },
   methods: {
@@ -160,9 +169,13 @@ export default {
       if(this.day && this.from && this.to){
         this.p_user.schedule.push({type: this.index, exercise: this.index2, day: this.day, from: this.from, to: this.to, notes: this.notes});
         Update(session.user._id, this.p_user);
-        this.isActive=false;
+        this.notimessage="Your Schedule has been successfully updated.";
+        this.dangerBool=false;
+        this.hideBool=false;
       } else {
-        console.log("error");
+        this.notimessage="Please input valid answers in all fields.";
+        this.dangerBool=true;
+        this.hideBool=false;
       }
     }
   }

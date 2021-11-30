@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="notification" v-bind:class="{ 'is-hidden': hideBool, 'is-danger': dangerBool, 'is-success': !dangerBool }">
+      <button class="delete" @click="hideBool = true"></button>
+      {{notimessage}}
+    </div>
+
     <label class="label">First Name</label>
       <input class="input" type="text" v-model="user.firstName" v-bind:class="{ 'is-hidden': !editBool }">
       <div v-bind:class="{ 'is-hidden': editBool }">{{user.firstName}}</div>
@@ -23,7 +28,7 @@
 
     <div>
       <div class="button" @click="edit" v-bind:class="{ 'is-hidden': editBool }">edit</div>
-    <div class="button" @click="updateUser" v-bind:class="{ 'is-hidden': !editBool }">Submit</div>
+      <div class="button" @click="updateUser" v-bind:class="{ 'is-hidden': !editBool }">Submit</div>
     </div>
     
   </div>
@@ -48,6 +53,9 @@ export default {
             },
             Session,
             editBool: false,
+            hideBool: true,
+            dangerBool: false,
+            notimessage: null,
         })
     },
     methods: {
@@ -55,8 +63,17 @@ export default {
           this.editBool=true;
         },
         updateUser(){
-          Update(Session.user._id, this.user);
-          this.editBool=false;
+          if(this.firstName && this.lastName && this.handle){
+            Update(Session.user._id, this.user);
+            this.editBool=false;
+            this.dangerBool=false;
+            this.notimessage="Successfully updated profile"
+            this.hideBool=false;
+          } else {
+            this.notimessage="Please enter valid inputs for all fields"
+            this.dangerBool=true;
+            this.hideBool=false;
+          }
         },
     }
 }

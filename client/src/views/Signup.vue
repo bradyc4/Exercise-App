@@ -3,9 +3,9 @@
 <div class="column is-half is-offset-one-quarter">
 
 
-<div class="notification is-danger" v-bind:class="{ 'is-hidden': errorBool }">
-  <button class="delete" @click="hideError"></button>
-  {{errormessage}}
+<div class="notification" v-bind:class="{ 'is-hidden': hideBool, 'is-danger': dangerBool, 'is-success': !dangerBool }">
+  <button class="delete" @click="hideBool=true"></button>
+  {{notimessage}}
 </div>
 
 <h1 style="text-align: center; font-size: 35px;">Sign Up</h1>
@@ -64,9 +64,9 @@ export default {
         return {
             //usernameinput: '',
             email: null,
-            errorBool: true, 
+            hideBool: true, 
             Add,
-            errormessage: null,
+            notimessage: null,
             user: { 
               firstName: '',
               lastName: '',
@@ -81,6 +81,7 @@ export default {
               get name(){ return this.firstName + ' ' + this.lastName },
             },
             array: [],
+            dangerBool: false,
         }
     },
     /*mounted() {
@@ -91,21 +92,26 @@ export default {
     },*/
     methods: {
         signUp() {
-          try {
+          if(this.user.firstName && this.user.lastName && this.user.handle && this.user.password && this.email){
             if(this.email != null){
               this.user.emails.push(this.email);
-              console.log("wwwww");
             }
             Add(this.user);
-            this.$router.push('/login');
-          } catch (error) {
-            this.errorBool=false;
-            this.errormessage = error.msg;
+            this.notimessage="Successfully created account";
+            this.dangerBool=false;
+            this.hideBool=false;
+            
+            this.user.firstName=null;
+            this.user.lastName=null;
+            this.user.handle=null;
+            this.user.password=null;
+            this.email=null;
+          } else {
+            this.notimessage = "Please put valid inputs in all fields";
+            this.dangerBool=true;
+            this.hideBool=false;
           }
         },
-        hideError(){
-          this.errorBool=true;
-        }
     }
 }
 </script>

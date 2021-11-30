@@ -16,7 +16,8 @@ const session = {
             router.push(this.toRoute);
                 
         } catch (error) {
-            this.Error(error);
+            //this.Error(error);
+            return error;
         }
     },
     Error(error){
