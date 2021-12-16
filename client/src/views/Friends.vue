@@ -13,7 +13,6 @@
       <div v-if="index===0">
         
         <nav class="level">
-          
           <div class="level-item">
             <div class="field has-addons" >
               <p class="control">

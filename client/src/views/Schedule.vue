@@ -7,6 +7,7 @@
         <p>exercise: {{list[p.type][p.exercise].label}}</p>
         <p>From: {{p.from}}</p>
         <p>To: {{p.to}}</p>
+        <p>With:</p> <p v-for="j in p.with" :key="j">{{j.handle}}</p>
         <p>Notes: {{p.notes}}</p>
         <button class="button" @click="removeEx(i)">Remove</button>
       </div>

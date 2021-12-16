@@ -61,11 +61,26 @@
 
             <div>
             Day
-            <input class="input" type="text" placeholder="Day" @click="isActive2=false; isActive3=false" required v-model="day">
+            <input class="input" type="text" placeholder="Day" @click="isActive2=false; isActive3=false; isActive4=false" required v-model="day">
             From
-            <input class="input" type="text" placeholder="Time" @click="isActive2=false; isActive3=false" required v-model="from">
+            <input class="input" type="text" placeholder="Time" @click="isActive2=false; isActive3=false; isActive4=false" required v-model="from">
             To
-            <input class="input" type="text" placeholder="Time" @click="isActive2=false; isActive3=false" required v-model="to">
+            <input class="input" type="text" placeholder="Time" @click="isActive2=false; isActive3=false; isActive4=false" required v-model="to">
+
+            Who with?
+            <div class="dropdown" :class="{'is-active': isActive4 }">
+              <div class="dropdown-trigger" @click="isActive3 = false; isActive2=false">
+                  <input class="input" type="text" aria-haspopup="true" aria-controls="dropdown-menu" placeholder="Friends" @keypress="searchforuser(who); isActive4=true" @click="isActive2=false; isActive3=false" required v-model="who">
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div class="dropdown-content" v-for="(p, i) in userlist" :key="p">
+                  <a class="dropdown-item" @click="pushfriend(p.handle); isActive2=false; isActive3=false; index2=i">
+                    {{p.handle}}
+                  </a>
+                </div>
+              </div>
+            </div>
+            {{friends}}
             Notes
             <textarea class="textarea" placeholder="Notes" @click="isActive2=false; isActive3=false" required v-model="notes"></textarea>  
             <button @click="Submit()">Submit</button>
@@ -114,29 +129,20 @@
       </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
   </div>
 </template>
 
 <script>
 import list from "../services/exercises";
 import session from '../services/session';
-import { Update } from '../services/users';
+import { Update, Search } from '../services/users';
 var index = 0;
 var index2 = 0;
 const ar_type=["Endurance","Strength","Balance","Flexibility"];
 const hours = ["1","2","3","4","5","6","7","8","9","10","11","12"];
 const minutes = ["00","05","10","15","20","25","30","35","40","45","50","55"];
 const half = ["am","pm"];
+let userlist = [];
 export default {
   data(){
     return{
@@ -145,6 +151,8 @@ export default {
       day: "",
       from: "",
       to: "",
+      friends: [],
+      who: "",
       notes: "",
       list,
       index,
@@ -152,6 +160,7 @@ export default {
       isActive: false,
       isActive2: false,
       isActive3: false,
+      isActive4: false,
       hours,
       minutes,
       half,
@@ -162,12 +171,13 @@ export default {
       notimessage: null,
       hideBool: true,
       dangerBool: false,
+      userlist
     }
   },
   methods: {
     Submit(){
       if(this.day && this.from && this.to){
-        this.p_user.schedule.push({type: this.index, exercise: this.index2, day: this.day, from: this.from, to: this.to, notes: this.notes});
+        this.p_user.schedule.push({type: this.index, exercise: this.index2, day: this.day, from: this.from, to: this.to, with: this.friends, notes: this.notes});
         Update(session.user._id, this.p_user);
         this.notimessage="Your Schedule has been successfully updated.";
         this.dangerBool=false;
@@ -177,6 +187,16 @@ export default {
         this.dangerBool=true;
         this.hideBool=false;
       }
+    },
+    async searchforuser(string){
+        this.userlist = await Search(string);
+    },
+    test(){
+      console.log("test");
+    },
+    pushfriend(user){
+      this.friends.push({handle: user});
+      this.isActive4=false;
     }
   }
 }
