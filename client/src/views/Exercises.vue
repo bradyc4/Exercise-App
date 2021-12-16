@@ -70,7 +70,7 @@
             Who with?
             <div class="dropdown" :class="{'is-active': isActive4 }">
               <div class="dropdown-trigger" @click="isActive3 = false; isActive2=false">
-                  <input class="input" type="text" aria-haspopup="true" aria-controls="dropdown-menu" placeholder="Friends" @keypress="searchforuser(who); isActive4=true" @click="isActive2=false; isActive3=false" required v-model="who">
+                  <input class="input" type="text" aria-haspopup="true" aria-controls="dropdown-menu" placeholder="Friends" @keyup="searchforuser(who); isActive4=true" @click="isActive2=false; isActive3=false" v-model="who">
               </div>
               <div class="dropdown-menu" id="dropdown-menu" role="menu">
                 <div class="dropdown-content" v-for="(p, i) in userlist" :key="p">
@@ -153,6 +153,7 @@ export default {
       to: "",
       friends: [],
       who: "",
+      whob: "",
       notes: "",
       list,
       index,
@@ -189,7 +190,9 @@ export default {
       }
     },
     async searchforuser(string){
+      if(string){
         this.userlist = await Search(string);
+      }
     },
     test(){
       console.log("test");
