@@ -81,10 +81,13 @@
               </div>
             </div>
             {{friends}}
-            Notes
+            <div>
+              Notes
             <textarea class="textarea" placeholder="Notes" @click="isActive2=false; isActive3=false" required v-model="notes"></textarea>  
             <button @click="Submit()">Submit</button>
             <button @click="isActive = false">Cancel</button>
+            </div>
+            
             </div>
             
         </div>        
